@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PedidosComida.Models.tblPedido>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-success">
+            <i class="bi bi-card-list"></i> Pedidos registrados
+        </h2>
+        @Html.ActionLink("➕ Crear nuevo pedido", "Create", null, new { @class = "btn btn-outline-success" })
+    </div>
+
+    <table class="table table-hover table-bordered shadow-sm bg-white">
+        <thead class="thead-dark text-white" style="background-color: #28a745;">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.NombreCliente)</th>
+                <th>@Html.DisplayNameFor(model => model.Telefono)</th>
+                <th>@Html.DisplayNameFor(model => model.FechaHora)</th>
+                <th>@Html.DisplayNameFor(model => model.Total)</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.NombreCliente)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                    <td>@item.FechaHora.ToString("dd/MM/yyyy hh:mm tt")</td>
+                    <td>@item.Total.ToString("C")</td>
+                    <td class="text-center">
+                        @Html.ActionLink(" ", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-sm btn-outline-primary", title = "Ver detalles" })
+                        <i class="bi bi-eye-fill"></i>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
