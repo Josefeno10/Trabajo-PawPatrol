@@ -26,6 +26,7 @@ namespace PedidosComida.Models
         public string Telefono { get; set; }
         public System.DateTime FechaHora { get; set; }
         public decimal Total { get; set; }
+        public string Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblCarrito> tblCarrito { get; set; }

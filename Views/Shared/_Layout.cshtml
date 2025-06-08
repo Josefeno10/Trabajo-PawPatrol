@@ -20,8 +20,15 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Comida", "Index", "tblProductoes", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Carrito", "Index", "tblCarritoes", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Administrar Pedidos", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    }
+                    @*<li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
                 </ul>
                  @Html.Partial("_LoginPartial")
             </div>
