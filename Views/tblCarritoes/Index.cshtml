@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PedidosComida.Models.tblCarrito>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subtotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tblPedido.NombreCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tblProducto.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subtotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tblPedido.NombreCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tblProducto.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_Detalle }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_Detalle }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_Detalle })
+        </td>
+    </tr>
+}
+
+</table>
