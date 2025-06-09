@@ -19,6 +19,7 @@
                 <th>@Html.DisplayNameFor(model => model.Telefono)</th>
                 <th>@Html.DisplayNameFor(model => model.FechaHora)</th>
                 <th>@Html.DisplayNameFor(model => model.Total)</th>
+                <th>@Html.DisplayNameFor(model => model.Estado)</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -30,8 +31,9 @@
                     <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
                     <td>@item.FechaHora.ToString("dd/MM/yyyy hh:mm tt")</td>
                     <td>@item.Total.ToString("C")</td>
+                    <td>@Html.DisplayFor(modelItem => item.Estado)</td>
                     <td class="text-center">
-                        @Html.ActionLink(" ", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-sm btn-outline-primary", title = "Ver detalles" })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-sm btn-outline-primary", title = "Ver detalles" })
                         <i class="bi bi-eye-fill"></i>
                     </td>
                 </tr>
