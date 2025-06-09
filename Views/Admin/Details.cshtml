@@ -4,63 +4,59 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>tblPedido</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreCliente)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NombreCliente)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaHora)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaHora)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Total)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-
-    </dl>
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">
+                <i class="bi bi-receipt-cutoff"></i> Detalles del Pedido
+            </h4>
+            <span class="badge bg-light text-success">
+                ID: @Model.ID_Pedido
+            </span>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="bi bi-person-fill text-success me-2"></i>
+                    <strong>Nombre del Cliente:</strong> @Model.NombreCliente
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-geo-alt-fill text-success me-2"></i>
+                    <strong>Dirección:</strong> @Model.Direccion
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-telephone-fill text-success me-2"></i>
+                    <strong>Teléfono:</strong> @Model.Telefono
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-calendar-event-fill text-success me-2"></i>
+                    <strong>Fecha y Hora:</strong> @Model.FechaHora.ToString("dd/MM/yyyy hh:mm tt")
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-currency-dollar text-success me-2"></i>
+                    <strong>Total:</strong> @Model.Total.ToString("C")
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-info-circle-fill text-success me-2"></i>
+                    <strong>Estado:</strong>
+                    @if (Model.Estado == "Entregado")
+                    {
+                        <span class="badge bg-success">@Model.Estado</span>
+                    }
+                    else if (Model.Estado == "Pendiente")
+                    {
+                        <span class="badge bg-warning text-dark">@Model.Estado</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@Model.Estado</span>
+                    }
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            @Html.ActionLink("✏️ Editar", "Edit", new { id = Model.ID_Pedido }, new { @class = "btn btn-outline-success" })
+            @Html.ActionLink("⬅️ Volver al listado", "Index", null, new { @class = "btn btn-outline-secondary" })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Pedido }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

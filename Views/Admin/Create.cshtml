@@ -4,75 +4,81 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>tblPedido</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.NombreCliente, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white d-flex align-items-center">
+            <i class="bi bi-plus-circle-fill me-2"></i>
+            <h4 class="mb-0">Registrar nuevo pedido</h4>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FechaHora, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FechaHora, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FechaHora, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.NombreCliente, htmlAttributes: new { @class = "form-label" })
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nombre del cliente" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "form-label" })
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                        @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", @placeholder = "Dirección de entrega" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "form-label" })
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "Teléfono de contacto" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
-}
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.FechaHora, htmlAttributes: new { @class = "form-label" })
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        @Html.EditorFor(model => model.FechaHora, new { htmlAttributes = new { @class = "form-control", @type = "datetime-local" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.FechaHora, "", new { @class = "text-danger" })
+                </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "form-label" })
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @placeholder = "Total del pedido" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-4">
+                    @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "form-label" })
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-info-circle-fill"></i></span>
+                        @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control", @placeholder = "Estado del pedido (ej. Pendiente, Entregado)" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <input type="submit" value="✅ Registrar pedido" class="btn btn-success" />
+                    @Html.ActionLink("⬅️ Volver al listado", "Index", null, new { @class = "btn btn-outline-secondary" })
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
 @section Scripts {

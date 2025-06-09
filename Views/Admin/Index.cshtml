@@ -4,40 +4,50 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="text-success">
-            <i class="bi bi-card-list"></i> Pedidos registrados
+<!-- Encabezado -->
+<div class="container my-4">
+    <div class="text-center mb-5">
+        <h2 class="display-5 text-success">
+            <i class="bi bi-clipboard-data-fill"></i> Pedidos Registrados
         </h2>
-        @Html.ActionLink("➕ Crear nuevo pedido", "Create", null, new { @class = "btn btn-outline-success" })
+        @Html.ActionLink("➕ Crear nuevo pedido", "Create", null, new { @class = "btn btn-outline-success mt-3" })
     </div>
 
-    <table class="table table-hover table-bordered shadow-sm bg-white">
-        <thead class="thead-dark text-white" style="background-color: #28a745;">
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.NombreCliente)</th>
-                <th>@Html.DisplayNameFor(model => model.Telefono)</th>
-                <th>@Html.DisplayNameFor(model => model.FechaHora)</th>
-                <th>@Html.DisplayNameFor(model => model.Total)</th>
-                <th>@Html.DisplayNameFor(model => model.Estado)</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.NombreCliente)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
-                    <td>@item.FechaHora.ToString("dd/MM/yyyy hh:mm tt")</td>
-                    <td>@item.Total.ToString("C")</td>
-                    <td>@Html.DisplayFor(modelItem => item.Estado)</td>
-                    <td class="text-center">
-                        @Html.ActionLink("Detalles", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-sm btn-outline-primary", title = "Ver detalles" })
-                        <i class="bi bi-eye-fill"></i>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <!-- Tarjetas de pedidos -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 border-success shadow-sm">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-person-fill"></i> @item.NombreCliente</span>
+                        <span><i class="bi bi-clock-fill"></i> @item.FechaHora.ToString("dd/MM/yyyy hh:mm tt")</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong><i class="bi bi-telephone-fill"></i> Teléfono:</strong> @item.Telefono<br />
+                            <strong><i class="bi bi-currency-dollar"></i> Total:</strong> @item.Total.ToString("C")<br />
+                            <strong><i class="bi bi-info-circle-fill"></i> Estado:</strong>
+                            @if (item.Estado == "Entregado")
+                            {
+                                <span class="badge bg-success">@item.Estado</span>
+                            }
+                            else if (item.Estado == "Pendiente")
+                            {
+                                <span class="badge bg-warning text-dark">@item.Estado</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@item.Estado</span>
+                            }
+                        </p>
+                    </div>
+                    <div class="card-footer bg-light text-end">
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-outline-primary btn-sm" })
+                        <i class="bi bi-eye-fill ms-1"></i>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
