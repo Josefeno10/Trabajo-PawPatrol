@@ -1,57 +1,42 @@
-﻿idosComida.Models.tblPedido>
+﻿@model IEnumerable<PedidosComida.Models.tblPedido>
 
 @{
     ViewBag.Title = "Index";
 }
+<!-- Título -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Lista de Pedidos</h2>
+    @Html.ActionLink("➕ Nuevo Pedido", "Create", null, new { @class = "btn btn-success" })
+</div>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NombreCliente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaHora)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Total)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NombreCliente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Direccion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FechaHora)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Total)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID_Pedido }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID_Pedido }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID_Pedido })
-        </td>
-    </tr>
-}
-
-</table>
+<!-- Tabla -->
+<div class="table-responsive">
+    <table class="table table-bordered table-hover shadow-sm rounded">
+        <thead class="table-light">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().NombreCliente)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Direccion)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Telefono)</th>
+                <th>@Html.DisplayNameFor(model => model.First().FechaHora)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Total)</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.NombreCliente)</td>
+                <td>@Html.DisplayFor(modelItem => item.Direccion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                <td>@item.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>$@item.Total.ToString("F2")</td>
+                <td class="text-center">
+                    @Html.ActionLink("✏️", "Edit", new { id = item.ID_Pedido }, new { @class = "btn btn-warning btn-sm me-1", title = "Editar" })
+                    @Html.ActionLink("🔍", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-info btn-sm me-1", title = "Detalles" })
+                    @Html.ActionLink("🗑️", "Delete", new { id = item.ID_Pedido }, new { @class = "btn btn-danger btn-sm", title = "Eliminar" })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
