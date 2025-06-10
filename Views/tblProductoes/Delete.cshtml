@@ -1,7 +1,7 @@
 ﻿@model PedidosComida.Models.tblProducto
 
 @{
-    ViewBag.Title = "Eliminar Producto";
+    ViewBag.Title = "Detalles del Producto";
 }
 
 <!-- Bootstrap Icons + Fuente -->
@@ -27,15 +27,6 @@
         text-align: center;
     }
 
-    .btn-danger {
-        background-color: #b02a37;
-        border: none;
-    }
-
-        .btn-danger:hover {
-            background-color: #842029;
-        }
-
     .form-wrapper {
         width: 95%;
         max-width: 800px;
@@ -49,17 +40,19 @@
     dd {
         margin-bottom: 1rem;
     }
+
+    .btn-action {
+        font-size: 1.1rem;
+    }
 </style>
 
 <div class="container mt-5">
     <div class="card shadow">
         <div class="card-header">
-            <h4><i class="bi bi-trash-fill me-2"></i>Eliminar producto</h4>
+            <h4><i class="bi bi-info-circle-fill me-2"></i>Detalles del producto</h4>
         </div>
         <div class="card-body">
             <div class="form-wrapper">
-                <h5 class="text-center mb-4 text-danger">¿Estás seguro de que deseas eliminar este producto?</h5>
-                <hr />
                 <dl class="row">
                     <dt class="col-sm-4">
                         @Html.DisplayNameFor(model => model.Nombre)
@@ -91,14 +84,10 @@
                     </dd>
                 </dl>
 
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="text-center mt-4">
-                        <input type="submit" value="Eliminar" class="btn btn-danger btn-lg me-3" />
-                        @Html.ActionLink("← Volver al listado ", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
-                    </div>
-                }
+                <div class="text-center mt-4">
+                    @Html.ActionLink("✏️ Editar", "Edit", new { id = Model.ID_Producto }, new { @class = "btn btn-warning btn-action me-3" })
+                    @Html.ActionLink("← Volver al listado ", "Index", null, new { @class = "btn btn-outline-secondary btn-action" })
+                </div>
             </div>
         </div>
     </div>
