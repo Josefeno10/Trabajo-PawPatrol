@@ -1,51 +1,35 @@
 ﻿@model IEnumerable<PedidosComida.Models.tblCarrito>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Carrito de Compras";
 }
 
-<h2>Index</h2>
+<h2 class="text-center mb-4">Carrito de Compras</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Cantidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Subtotal)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tblPedido.NombreCliente)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tblProducto.Nombre)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cantidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subtotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tblPedido.NombreCliente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tblProducto.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID_Detalle }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID_Detalle }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID_Detalle })
-        </td>
-    </tr>
-}
-
+<table class="table table-hover shadow-sm rounded">
+    <thead class="table-dark">
+        <tr>
+            <th>Pedido</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID_Pedido</td>
+                <td>@item.ID_Producto</td>
+                <td>@item.Cantidad</td>
+                <td>@item.Subtotal.ToString("C")</td>
+                <td class="text-center">
+                    @Html.ActionLink("Editar", "Edit", new { ID_Pedido = item.ID_Pedido, ID_Producto = item.ID_Producto }, new { @class = "btn btn-sm btn-outline-warning me-1" })
+                    @Html.ActionLink("Detalles", "Details", new { ID_Pedido = item.ID_Pedido, ID_Producto = item.ID_Producto }, new { @class = "btn btn-sm btn-outline-info me-1" })
+                    @Html.ActionLink("Eliminar", "Delete", new { ID_Pedido = item.ID_Pedido, ID_Producto = item.ID_Producto }, new { @class = "btn btn-sm btn-outline-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

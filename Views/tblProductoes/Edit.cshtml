@@ -1,64 +1,100 @@
 ﻿@model PedidosComida.Models.tblProducto
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Producto";
 }
 
-<h2>Edit</h2>
+<!-- Bootstrap Icons + Fuente -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
 
+<style>
+    body {
+        background: linear-gradient(135deg, #dce1d4, #f8f4e3);
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>tblProducto</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID_Producto)
+    .card {
+        border-radius: 1rem;
+        overflow: hidden;
+        border: none;
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
+    .card-header {
+        background-color: #4d6a4d;
+        color: white;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #4d6a4d;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #3c523c;
+        }
+
+    label i {
+        color: #4d6a4d;
+    }
+
+    .form-wrapper {
+        width: 95%;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header">
+            <h4><i class="bi bi-pencil-square me-2"></i>Editar producto</h4>
         </div>
+        <div class="card-body bg-white">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger text-center" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Precio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
-            </div>
+                @Html.HiddenFor(model => model.ID_Producto)
+
+                <div class="form-wrapper">
+                    <div class="form-floating mb-4">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Nombre del producto" } })
+                        <label for="Nombre"><i class="bi bi-card-text me-2"></i>Nombre del producto</label>
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "$ Precio" } })
+                        <label for="Precio"><i class="bi bi-currency-dollar me-2"></i>Precio</label>
+                        @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        @Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Categoría" } })
+                        <label for="Categoria"><i class="bi bi-tag-fill me-2"></i>Categoría</label>
+                        @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        @Html.EditorFor(model => model.ImagenURL, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "URL de imagen" } })
+                        <label for="ImagenURL"><i class="bi bi-image-fill me-2"></i>URL de imagen</label>
+                        @Html.ValidationMessageFor(model => model.ImagenURL, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">
+                        <i class="bi bi-save me-1"></i> Guardar cambios
+                    </button>
+                </div>
+            }
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImagenURL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImagenURL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImagenURL, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <div class="card-footer text-end bg-light">
+            @Html.ActionLink("← Volver al listado", "Index", null, new { @class = "btn btn-outline-secondary btn-sm" })
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
