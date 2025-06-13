@@ -11,7 +11,8 @@ namespace PedidosComida.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblProducto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,9 +22,19 @@ namespace PedidosComida.Models
         }
     
         public int ID_Producto { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre de la Comida")]
+        [StringLength(100, ErrorMessage = "El nombre no debe exceder los 100 caracteres")]
         public string Nombre { get; set; }
+        [Required]
         public Nullable<decimal> Precio { get; set; }
+        [Required]
+        [StringLength(50, ErrorMessage = "El nombre no debe exceder los 50 caracteres")]
         public string Categoria { get; set; }
+        
+        [Required(ErrorMessage = "Debe subir una URL de la comida")]
+        [StringLength(255, ErrorMessage = "La URL no debe exceder los 255 caracteres")]
         public string ImagenURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,51 +1,45 @@
 ﻿@model IEnumerable<PedidosComida.Models.tblProducto>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Menú de Comida";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="text-center mb-4">🍽️ Menú de Comida</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Precio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImagenURL)
-        </th>
-        <th></th>
-    </tr>
+<div class="text-end mb-3">
+    @if (User.IsInRole("Administrador"))
+    {
+        @Html.ActionLink("+ Agregar nuevo producto", "Create", null, new { @class = "btn btn-success" })
+    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Precio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImagenURL)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID_Producto }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID_Producto }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID_Producto })
-        </td>
-    </tr>
-}
 
-</table>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="@Url.Content(item.ImagenURL)" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@item.Nombre" />
+
+                <div class="card-body">
+                    <h5 class="card-title">@item.Nombre</h5>
+                    <p class="card-text fw-bold text-success">$@item.Precio</p>
+                    <p class="card-text text-muted">Categoría: @item.Categoria</p>
+                </div>
+
+                <div class="card-footer text-center">
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID_Producto }, new { @class = "btn btn-outline-primary btn-sm me-1" })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID_Producto }, new { @class = "btn btn-outline-secondary btn-sm me-1" })
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ID_Producto }, new { @class = "btn btn-outline-danger btn-sm me-1" })
+                    }
+
+                    @Html.ActionLink("🛒 Agregar", "AgregarAlCarrito", "tblCarritoes", new { idProducto = item.ID_Producto }, new { @class = "btn btn-outline-success btn-sm mt-2 w-100" })
+                </div>
+            </div>
+        </div>
+    }
+</div>

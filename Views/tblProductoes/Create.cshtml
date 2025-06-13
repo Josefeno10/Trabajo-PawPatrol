@@ -1,62 +1,97 @@
 ﻿@model PedidosComida.Models.tblProducto
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Crear nuevo producto";
 }
 
-<h2>Create</h2>
+<style>
+    h2 {
+        font-family: 'Georgia', serif;
+        color: #5c3d21;
+    }
 
+    .card-producto {
+        background-color: #fff;
+        border: 1px solid #e0c9a6;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        max-width: 720px;
+        margin: auto;
+    }
 
-@using (Html.BeginForm()) 
+    .btn-food {
+        background-color: #8B4513;
+        color: white;
+        border: none;
+        font-size: 1.05rem;
+        padding: 10px 30px;
+        border-radius: 8px;
+    }
+
+        .btn-food:hover {
+            background-color: #a0522d;
+        }
+
+    label {
+        font-weight: 600;
+        color: #5c3d21;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        font-size: 1.05rem;
+        padding: 0.65rem 0.9rem;
+        border-radius: 8px;
+    }
+
+    .text-center-btn {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Create", "tblProductoes", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>tblProducto</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
+
+    <div class="card-producto">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Nombre)
+            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Ej: Hamburguesa" })
+            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Precio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
-            </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Precio)
+            @Html.TextBoxFor(model => model.Precio, new { @class = "form-control", type = "number", step = "0.01", placeholder = "Ej: 50.00" })
+            @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
-            </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Categoria)
+            @Html.TextBoxFor(model => model.Categoria, new { @class = "form-control", placeholder = "Ej: Comida rápida" })
+            @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ImagenURL, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ImagenURL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImagenURL, "", new { @class = "text-danger" })
-            </div>
+        <div class="mb-4">
+            @Html.LabelFor(model => model.ImagenURL, "URL de la imagen")
+            @Html.TextBoxFor(model => model.ImagenURL, new { @class = "form-control", placeholder = "https://ejemplo.com/imagen.jpg" })
+            @Html.ValidationMessageFor(model => model.ImagenURL, "", new { @class = "text-danger" })
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div class="text-center-btn mb-3">
+            <input type="submit" value="Guardar producto" class="btn btn-food fw-bold" />
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="text-center mt-4">
+    @Html.ActionLink("← Volver al listado", "Index", null, new { @class = "btn btn-outline-secondary" })
 </div>
 
 @section Scripts {

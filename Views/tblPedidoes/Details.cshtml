@@ -1,58 +1,60 @@
 ﻿@model PedidosComida.Models.tblPedido
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles del Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4"><i class="bi bi-receipt"></i> Detalles del Pedido</h2>
 
-<div>
-    <h4>tblPedido</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreCliente)
-        </dt>
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4 text-end fw-bold">
+                            @Html.DisplayNameFor(model => model.NombreCliente)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.NombreCliente)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NombreCliente)
-        </dd>
+                        <dt class="col-sm-4 text-end fw-bold">
+                            @Html.DisplayNameFor(model => model.Direccion)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Direccion)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
+                        <dt class="col-sm-4 text-end fw-bold">
+                            @Html.DisplayNameFor(model => model.Telefono)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Telefono)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
+                        <dt class="col-sm-4 text-end fw-bold">
+                            @Html.DisplayNameFor(model => model.FechaHora)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.FechaHora)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
+                        <dt class="col-sm-4 text-end fw-bold">
+                            @Html.DisplayNameFor(model => model.Total)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Total)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaHora)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaHora)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Total)
-        </dd>
-
-    </dl>
+            <div class="text-center mt-4">
+                @Html.ActionLink("Editar", "Edit", new { id = Model.ID_Pedido }, new { @class = "btn btn-warning me-2" })
+                @Html.ActionLink("Volver a la lista", "Index", null, new { @class = "btn btn-outline-secondary" })
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Pedido }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -11,13 +11,18 @@ namespace PedidosComida.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblCarrito
     {
+        
         public int ID_Detalle { get; set; }
-        public int ID_Pedido { get; set; }
+        public int? ID_Pedido { get; set; }
         public int ID_Producto { get; set; }
+
+        [Required]
         public int Cantidad { get; set; }
+        [Required]
         public decimal Subtotal { get; set; }
     
         public virtual tblPedido tblPedido { get; set; }

@@ -4,59 +4,98 @@
     ViewBag.Title = "Iniciar sesión";
 }
 
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
-                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <h4>Utilice una cuenta local para iniciar sesión.</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="row">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
-                        <div class="col-md-10">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="offset-md-2 col-md-10">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="offset-md-2 col-md-10">
-                            <input type="submit" value="Iniciar sesión" class="btn btn-outline-dark" />
-                        </div>
-                    </div>
-                    <p>
-                        @Html.ActionLink("Registrarse como usuario nuevo", "Register")
-                    </p>
-                    @* Habilite esta opción una vez tenga la confirmación de la cuenta habilitada para la funcionalidad de restablecimiento de contraseña
-                        <p>
-                            @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
-                        </p>*@
-                }
-            </section>
-        </div>
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-            </section>
-        </div>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fff8f0;
+    }
+
+    h2 {
+        font-family: 'Georgia', serif;
+        color: #5c3d21;
+    }
+
+    .login-card {
+        background-color: #fff;
+        border: 1px solid #e0c9a6;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 480px;
+        width: 100%;
+    }
+
+    .btn-food {
+        background-color: #8B4513;
+        color: white;
+        border: none;
+    }
+
+        .btn-food:hover {
+            background-color: #a0522d;
+        }
+
+    .form-label {
+        font-weight: 600;
+        color: #5c3d21;
+    }
+
+    .text-brown {
+        color: #8B4513;
+    }
+</style>
+
+<main class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="login-card">
+        <h2 class="text-center mb-4">
+            <i class="bi bi-box-arrow-in-right me-2"></i>@ViewBag.Title
+        </h2>
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <!-- Correo -->
+            <div class="mb-3">
+                <label class="form-label" for="Email">@Html.DisplayNameFor(m => m.Email)</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-brown"><i class="bi bi-envelope-fill"></i></span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "correo@ejemplo.com" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label class="form-label" for="Password">@Html.DisplayNameFor(m => m.Password)</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-brown"><i class="bi bi-lock-fill"></i></span>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "••••••••" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Recordar sesión -->
+            <div class="form-check mb-3">
+                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input", id = "rememberMeCheck" })
+                <label class="form-check-label" for="rememberMeCheck">
+                    @Html.DisplayNameFor(m => m.RememberMe)
+                </label>
+            </div>
+
+            <!-- Botón de iniciar sesión -->
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-food fw-bold">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión
+                </button>
+            </div>
+
+            <!-- Link de registro -->
+            <div class="text-center">
+                @Html.ActionLink("Registrarse como usuario nuevo", "Register", null, new { @class = "link-secondary text-decoration-none" })
+            </div>
+        }
     </div>
 </main>
 

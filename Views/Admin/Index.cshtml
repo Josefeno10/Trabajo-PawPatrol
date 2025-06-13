@@ -10,16 +10,39 @@
         <h2 class="display-5 text-success">
             <i class="bi bi-clipboard-data-fill"></i> Pedidos Registrados
         </h2>
-        @Html.ActionLink("➕ Crear nuevo pedido", "Create", null, new { @class = "btn btn-outline-success mt-3" })
+        @Html.ActionLink("+ Crear nuevo pedido", "Create", null, new { @class = "btn btn-outline-success mt-3" })
     </div>
 
     <!-- Tarjetas de pedidos -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach (var item in Model)
         {
+            string color = "secondary";
+            string colorCard = "border-secondary";
+            string bgHeader = "bg-secondary";
+
+            if (item.Estado == "Confirmado")
+            {
+                color = "success";
+                colorCard = "border-success";
+                bgHeader = "bg-success";
+            }
+            else if (item.Estado == "En Proceso")
+            {
+                color = "warning text-dark";
+                colorCard = "border-warning";
+                bgHeader = "bg-warning text-dark";
+            }
+            else if (item.Estado == "Cancelado")
+            {
+                color = "danger";
+                colorCard = "border-danger";
+                bgHeader = "bg-danger";
+            }
+
             <div class="col">
-                <div class="card h-100 border-success shadow-sm">
-                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <div class="card h-100 @colorCard shadow-sm">
+                    <div class="card-header @bgHeader d-flex justify-content-between align-items-center text-white">
                         <span><i class="bi bi-person-fill"></i> @item.NombreCliente</span>
                         <span><i class="bi bi-clock-fill"></i> @item.FechaHora.ToString("dd/MM/yyyy hh:mm tt")</span>
                     </div>
@@ -28,23 +51,12 @@
                             <strong><i class="bi bi-telephone-fill"></i> Teléfono:</strong> @item.Telefono<br />
                             <strong><i class="bi bi-currency-dollar"></i> Total:</strong> @item.Total.ToString("C")<br />
                             <strong><i class="bi bi-info-circle-fill"></i> Estado:</strong>
-                            @if (item.Estado == "Entregado")
-                            {
-                                <span class="badge bg-success">@item.Estado</span>
-                            }
-                            else if (item.Estado == "Pendiente")
-                            {
-                                <span class="badge bg-warning text-dark">@item.Estado</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">@item.Estado</span>
-                            }
+                            <span class="badge bg-@color">@item.Estado</span>
                         </p>
                     </div>
                     <div class="card-footer bg-light text-end">
-                        @Html.ActionLink("Detalles", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-outline-primary btn-sm" })
-                        <i class="bi bi-eye-fill ms-1"></i>
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID_Pedido }, new { @class = "btn btn-outline-primary btn-sm me-2" })
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ID_Pedido }, new { @class = "btn btn-outline-danger btn-sm" })
                     </div>
                 </div>
             </div>

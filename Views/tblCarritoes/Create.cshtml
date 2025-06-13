@@ -1,64 +1,75 @@
 ﻿@model PedidosComida.Models.tblCarrito
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Agregar al Carrito";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Ajusta si tu layout es diferente
 }
 
-<h2>Create</h2>
+<h2 class="text-center mb-4"><i class="bi bi-cart-plus-fill"></i> Agregar producto al carrito</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>tblCarrito</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ID_Pedido, "ID_Pedido", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ID_Pedido", null, htmlAttributes: new { @class = "form-control" })
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.ID_Pedido, "Pedido asociado", htmlAttributes: new { @class = "form-label" })
+                @Html.DropDownList("ID_Pedido", null, htmlAttributes: new { @class = "form-select" })
                 @Html.ValidationMessageFor(model => model.ID_Pedido, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ID_Producto, "ID_Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ID_Producto", null, htmlAttributes: new { @class = "form-control" })
+            <div class="mb-3">
+                @Html.LabelFor(model => model.ID_Producto, "Producto", htmlAttributes: new { @class = "form-label" })
+                @Html.DropDownList("ID_Producto", null, htmlAttributes: new { @class = "form-select", @id = "productoSelect" })
                 @Html.ValidationMessageFor(model => model.ID_Producto, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Cantidad, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control", @id = "cantidadInput", @type = "number", min = "1", value = "1" } })
                 @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Subtotal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Subtotal, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Subtotal, htmlAttributes: new { @class = "form-label" })
+                @Html.EditorFor(model => model.Subtotal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "subtotalInput" } })
                 @Html.ValidationMessageFor(model => model.Subtotal, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="text-center">
+                <button type="submit" class="btn btn-success px-4">
+                    <i class="bi bi-cart-check"></i> Agregar
+                </button>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="mt-4 text-center">
+    @Html.ActionLink("Volver a la lista", "Index", null, new { @class = "btn btn-outline-secondary" })
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        // Supongamos que tienes un diccionario de ID_Producto -> Precio
+        var precios = @Html.Raw(Json.Encode(ViewBag.Precios)); // desde el controlador
+
+        function calcularSubtotal() {
+            var idProducto = $("#productoSelect").val();
+            var cantidad = parseInt($("#cantidadInput").val()) || 1;
+            var precio = precios[idProducto] || 0;
+            var subtotal = cantidad * precio;
+            $("#subtotalInput").val(subtotal.toFixed(2));
+        }
+
+        $(document).ready(function () {
+            $("#productoSelect, #cantidadInput").on("change keyup", calcularSubtotal);
+            calcularSubtotal();
+        });
+    </script>
 }
