@@ -20,9 +20,10 @@ namespace PedidosComida.Models
         {
             this.tblCarrito = new HashSet<tblCarrito>();
         }
-    
+
         public int ID_Producto { get; set; }
 
+ administrarpedidos
         [Required]
         [Display(Name = "Nombre de la Comida")]
         [StringLength(100, ErrorMessage = "El nombre no debe exceder los 100 caracteres")]
@@ -35,6 +36,8 @@ namespace PedidosComida.Models
         
         [Required(ErrorMessage = "Debe subir una URL de la comida")]
         [StringLength(255, ErrorMessage = "La URL no debe exceder los 255 caracteres")]
+
+ master
         public string ImagenURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

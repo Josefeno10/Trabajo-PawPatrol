@@ -1,6 +1,7 @@
 ﻿@model PedidosComida.Models.tblProducto
 
 @{
+administrarpedidos
     ViewBag.Title = "Crear nuevo producto";
 }
 
@@ -82,8 +83,33 @@
             @Html.LabelFor(model => model.ImagenURL, "URL de la imagen")
             @Html.TextBoxFor(model => model.ImagenURL, new { @class = "form-control", placeholder = "https://ejemplo.com/imagen.jpg" })
             @Html.ValidationMessageFor(model => model.ImagenURL, "", new { @class = "text-danger" })
+master
         </div>
+        <div class="card-body bg-white">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger text-center" })
 
+                <div class="form-wrapper">
+                    <div class="form-floating mb-4">
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Nombre del producto" } })
+                        <label for="Nombre"><i class="bi bi-card-text me-2"></i>Nombre del producto</label>
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Precio" } })
+                        <label for="Precio"><i class="bi bi-currency-dollar me-2"></i>Precio</label>
+                        @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        @Html.EditorFor(model => model.Categoria, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "Categoría" } })
+                        <label for="Categoria"><i class="bi bi-tag-fill me-2"></i>Categoría</label>
+                        @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
+                    </div>
+administrarpedidos
         <div class="text-center-btn mb-3">
             <input type="submit" value="Guardar producto" class="btn btn-food fw-bold" />
         </div>
@@ -92,6 +118,7 @@
 
 <div class="text-center mt-4">
     @Html.ActionLink("← Volver al listado", "Index", null, new { @class = "btn btn-outline-secondary" })
+ master
 </div>
 
 @section Scripts {
