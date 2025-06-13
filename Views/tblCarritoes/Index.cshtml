@@ -1,35 +1,73 @@
-﻿@model IEnumerable<PedidosComida.Models.tblCarrito>
-
+﻿@model List<PedidosComida.Models.tblCarrito>
 @{
-    ViewBag.Title = "Carrito de Compras";
+administrarpedidos
+    ViewBag.Title = "Mi Carrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    decimal total = Model.Sum(x => x.Subtotal);
 }
 
-<h2 class="text-center mb-4">Carrito de Compras</h2>
+<div class="container py-4">
+    <h2 class="text-center mb-4"><i class="bi bi-cart3"></i> Mi Carrito</h2>
+    <p class="text-end"><strong>Cliente:</strong> @ViewBag.NombreCliente</p>
 
-<table class="table table-hover shadow-sm rounded">
-    <thead class="table-dark">
-        <tr>
-            <th>Pedido</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Subtotal</th>
-            <th class="text-center">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ID_Pedido</td>
-                <td>@item.ID_Producto</td>
-                <td>@item.Cantidad</td>
-                <td>@item.Subtotal.ToString("C")</td>
-                <td class="text-center">
-                    @Html.ActionLink("Editar", "Edit", new { ID_Pedido = item.ID_Pedido, ID_Producto = item.ID_Producto }, new { @class = "btn btn-sm btn-outline-warning me-1" })
-                    @Html.ActionLink("Detalles", "Details", new { ID_Pedido = item.ID_Pedido, ID_Producto = item.ID_Producto }, new { @class = "btn btn-sm btn-outline-info me-1" })
-                    @Html.ActionLink("Eliminar", "Delete", new { ID_Pedido = item.ID_Pedido, ID_Producto = item.ID_Producto }, new { @class = "btn btn-sm btn-outline-danger" })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">Tu carrito está vacío.</div>
+    }
+    else
+    {
+        <div class="row">
+            <!-- Columna izquierda: Productos -->
+            <div class="col-md-8">
+                <div class="row row-cols-1 row-cols-md-2 g-3">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <img src="@item.tblProducto.ImagenURL" class="card-img-top" style="height: 160px; object-fit: cover;" />
+                                <div class="card-body p-2">
+                                    <h5 class="card-title mb-1">@item.tblProducto.Nombre</h5>
+                                    <p class="card-text mb-1"><strong>Cantidad:</strong> @item.Cantidad</p>
+                                    <p class="card-text mb-1"><strong>Subtotal:</strong> $@item.Subtotal.ToString("0.00")</p>
+                                </div>
+                                <div class="card-footer bg-white border-top-0 text-end p-2">
+                                    <a href="@Url.Action("EliminarDelCarrito", "tblCarritoes", new { id = item.ID_Detalle })" class="btn btn-outline-danger btn-sm">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Columna derecha: Confirmar pedido -->
+            <div class="col-md-4 mt-4 mt-md-0">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <strong>Confirmar Pedido</strong>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2"><strong>Total a pagar:</strong> <span class="text-success fs-5">$@total.ToString("0.00")</span></p>
+
+                        <form action="@Url.Action("ConfirmarPedido", "tblCarritoes")" method="post">
+                            <input type="hidden" name="idPedido" value="@ViewBag.ID_Pedido" />
+
+                            <div class="mb-3">
+                                <label class="form-label">Dirección:</label>
+                                <input type="text" name="direccion" class="form-control" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono:</label>
+                                <input type="text" name="telefono" class="form-control" required />
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100">Confirmar Pedido</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+master

@@ -1,102 +1,64 @@
-﻿@@model PedidosComida.Models.tblPedido
+﻿@model PedidosComida.Models.tblPedido
 
 @{
     ViewBag.Title = "Nuevo Pedido";
+administrarpedidos
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Fuente Poppins + Bootstrap Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4 text-primary">📝 Crear nuevo pedido</h2>
 
-<style>
-    body {
-        background: linear-gradient(135deg, #f3f5f0, #faf3e0);
-        font-family: 'Poppins', sans-serif;
-        color: #333;
-    }
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-    .create-container {
-        max-width: 700px;
-        margin: 3rem auto;
-        background: white;
-        padding: 2rem;
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
-    }
+                <div class="card shadow-sm border-primary">
+                    <div class="card-body">
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-    .form-title {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-    }
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.NombreCliente, new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
+                        </div>
 
-    .form-group label {
-        font-weight: 500;
-    }
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.Direccion, new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                        </div>
 
-    .btn-submit {
-        background-color: #28a745;
-        color: white;
-        font-weight: 600;
-    }
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.Telefono, new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                        </div>
 
-        .btn-submit:hover {
-            background-color: #218838;
-        }
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.FechaHora, new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(model => model.FechaHora, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                            @Html.ValidationMessageFor(model => model.FechaHora, "", new { @class = "text-danger" })
+                        </div>
 
-    .btn-back {
-        margin-left: 1rem;
-    }
-</style>
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.Total, new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                        </div>
 
-<div class="create-container">
-    <div class="form-title">
-        <i class="bi bi-plus-circle-fill text-success fs-3"></i>
-        <h2 class="mb-0">Nuevo Pedido</h2>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success me-2">Guardar</button>
+                            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-
-    @using (Html.BeginForm())
-    {
-    @Html.AntiForgeryToken()
-
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group mb-3">
-        @Html.LabelFor(model => model.NombreCliente)
-        @Html.TextBoxFor(model => model.NombreCliente, new { @class = "form-control", placeholder = "Nombre del cliente" })
-        @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group mb-3">
-        @Html.LabelFor(model => model.Direccion)
-        @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control", placeholder = "Dirección de entrega" })
-        @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group mb-3">
-        @Html.LabelFor(model => model.Telefono)
-        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", placeholder = "Teléfono de contacto" })
-        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group mb-3">
-        @Html.LabelFor(model => model.FechaHora)
-        @Html.TextBoxFor(model => model.FechaHora, new { @class = "form-control", type = "datetime-local" })
-        @Html.ValidationMessageFor(model => model.FechaHora, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-group mb-4">
-        @Html.LabelFor(model => model.Total)
-        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", placeholder = "Total del pedido" })
-        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="d-flex justify-content-end">
-        <input type="submit" value="Guardar Pedido" class="btn btn-submit" />
-        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary btn-back" })
-    </div>
-    }
+ master
 </div>
 
 @section Scripts {

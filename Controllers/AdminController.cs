@@ -27,7 +27,10 @@ namespace PedidosComida.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblPedido tblPedido = db.tblPedido.Find(id);
+            tblPedido tblPedido = db.tblPedido
+                .Include("tblCarrito.tblProducto")
+                .FirstOrDefault(p => p.ID_Pedido == id);
+
             if (tblPedido == null)
             {
                 return HttpNotFound();
@@ -111,6 +114,13 @@ namespace PedidosComida.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
+            var relacionados = db.tblCarrito.Where(c => c.ID_Pedido == id).ToList();
+            foreach (var item in relacionados)
+            {
+                db.tblCarrito.Remove(item);
+            }
+
             tblPedido tblPedido = db.tblPedido.Find(id);
             db.tblPedido.Remove(tblPedido);
             db.SaveChanges();

@@ -3,39 +3,96 @@
     ViewBag.Title = "Registrarse";
 }
 
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Cree una cuenta nueva.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="row">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="offset-md-2 col-md-10">
-                <input type="submit" value="Registrarse" class="btn btn-outline-dark" />
-            </div>
-        </div>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fff8f0;
     }
+
+    h2 {
+        font-family: 'Georgia', serif;
+        color: #5c3d21;
+    }
+
+    .register-card {
+        background-color: #fff;
+        border: 1px solid #e0c9a6;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .btn-food {
+        background-color: #8B4513;
+        color: white;
+        border: none;
+    }
+
+        .btn-food:hover {
+            background-color: #a0522d;
+        }
+
+    .form-label {
+        font-weight: 600;
+        color: #5c3d21;
+    }
+
+    .text-brown {
+        color: #8B4513;
+    }
+</style>
+
+<main class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="register-card">
+        <h2 class="text-center mb-4">
+            <i class="bi bi-person-plus-fill me-2"></i>@ViewBag.Title
+        </h2>
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label" for="Email">@Html.DisplayNameFor(m => m.Email)</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-brown"><i class="bi bi-envelope-fill"></i></span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "correo@ejemplo.com" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label class="form-label" for="Password">@Html.DisplayNameFor(m => m.Password)</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-brown"><i class="bi bi-lock-fill"></i></span>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "••••••••" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Confirmar Contraseña -->
+            <div class="mb-4">
+                <label class="form-label" for="ConfirmPassword">@Html.DisplayNameFor(m => m.ConfirmPassword)</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-brown"><i class="bi bi-lock-fill"></i></span>
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirmar contraseña" })
+                </div>
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+
+            <!-- Botón -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-food fw-bold">
+                    <i class="bi bi-person-plus-fill me-1"></i> Registrarse
+                </button>
+            </div>
+        }
+    </div>
 </main>
 
 @section Scripts {

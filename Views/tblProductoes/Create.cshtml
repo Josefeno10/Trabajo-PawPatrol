@@ -1,60 +1,89 @@
 ﻿@model PedidosComida.Models.tblProducto
 
 @{
-    ViewBag.Title = "Agregar Producto";
+administrarpedidos
+    ViewBag.Title = "Crear nuevo producto";
 }
 
-<!-- Bootstrap Icons + Fuente -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
-
 <style>
-    body {
-        background: linear-gradient(135deg, #dce1d4, #f8f4e3);
-        font-family: 'Poppins', sans-serif;
-        color: #333;
+    h2 {
+        font-family: 'Georgia', serif;
+        color: #5c3d21;
     }
 
-    .card {
-        border-radius: 1rem;
-        overflow: hidden;
-        border: none;
+    .card-producto {
+        background-color: #fff;
+        border: 1px solid #e0c9a6;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        max-width: 720px;
+        margin: auto;
     }
 
-    .card-header {
-        background-color: #4d6a4d;
+    .btn-food {
+        background-color: #8B4513;
         color: white;
-        text-align: center;
-    }
-
-        .card-header h4 {
-            margin: 0;
-            padding: 0.5rem;
-        }
-
-    .btn-primary {
-        background-color: #4d6a4d;
         border: none;
+        font-size: 1.05rem;
+        padding: 10px 30px;
+        border-radius: 8px;
     }
 
-        .btn-primary:hover {
-            background-color: #3c523c;
+        .btn-food:hover {
+            background-color: #a0522d;
         }
 
-    label i {
-        color: #4d6a4d;
+    label {
+        font-weight: 600;
+        color: #5c3d21;
+        margin-bottom: 6px;
     }
 
-    .form-wrapper {
-        width: 95%;
-        margin: 0 auto;
+    .form-control {
+        font-size: 1.05rem;
+        padding: 0.65rem 0.9rem;
+        border-radius: 8px;
+    }
+
+    .text-center-btn {
+        display: flex;
+        justify-content: center;
     }
 </style>
 
-<div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header">
-            <h4><i class="bi bi-plus-circle me-2"></i>Agregar nuevo producto</h4>
+<h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Create", "tblProductoes", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card-producto">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Nombre)
+            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Ej: Hamburguesa" })
+            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Precio)
+            @Html.TextBoxFor(model => model.Precio, new { @class = "form-control", type = "number", step = "0.01", placeholder = "Ej: 50.00" })
+            @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Categoria)
+            @Html.TextBoxFor(model => model.Categoria, new { @class = "form-control", placeholder = "Ej: Comida rápida" })
+            @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.ImagenURL, "URL de la imagen")
+            @Html.TextBoxFor(model => model.ImagenURL, new { @class = "form-control", placeholder = "https://ejemplo.com/imagen.jpg" })
+            @Html.ValidationMessageFor(model => model.ImagenURL, "", new { @class = "text-danger" })
+master
         </div>
         <div class="card-body bg-white">
             @using (Html.BeginForm())
@@ -80,23 +109,16 @@
                         <label for="Categoria"><i class="bi bi-tag-fill me-2"></i>Categoría</label>
                         @Html.ValidationMessageFor(model => model.Categoria, "", new { @class = "text-danger" })
                     </div>
-
-                    <div class="form-floating mb-4">
-                        @Html.EditorFor(model => model.ImagenURL, new { htmlAttributes = new { @class = "form-control form-control-lg", placeholder = "URL de imagen" } })
-                        <label for="ImagenURL"><i class="bi bi-image-fill me-2"></i>URL de imagen</label>
-                        @Html.ValidationMessageFor(model => model.ImagenURL, "", new { @class = "text-danger" })
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">
-                        <i class="bi bi-check-circle me-1"></i> Guardar producto
-                    </button>
-                </div>
-            }
-        </div>
-        <div class="card-footer text-end bg-light">
-            @Html.ActionLink("← Volver al listado ", "Index", null, new { @class = "btn btn-outline-secondary btn-sm" })
+administrarpedidos
+        <div class="text-center-btn mb-3">
+            <input type="submit" value="Guardar producto" class="btn btn-food fw-bold" />
         </div>
     </div>
+}
+
+<div class="text-center mt-4">
+    @Html.ActionLink("← Volver al listado", "Index", null, new { @class = "btn btn-outline-secondary" })
+ master
 </div>
 
 @section Scripts {

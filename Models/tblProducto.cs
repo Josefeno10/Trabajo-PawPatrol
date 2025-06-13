@@ -23,24 +23,21 @@ namespace PedidosComida.Models
 
         public int ID_Producto { get; set; }
 
-        [Required(ErrorMessage = "El nombre del producto es obligatorio.")]
-        [StringLength(50, ErrorMessage = "El nombre no puede exceder los 50 caracteres.")]
-        [Display(Name = "Nombre del producto")]
+ administrarpedidos
+        [Required]
+        [Display(Name = "Nombre de la Comida")]
+        [StringLength(100, ErrorMessage = "El nombre no debe exceder los 100 caracteres")]
         public string Nombre { get; set; }
-
-        [Required(ErrorMessage = "El precio es obligatorio.")]
-        [Range(1, 1000, ErrorMessage = "El precio debe estar entre 1 y 1,000.")]
-        [Display(Name = "Precio")]
+        [Required]
         public Nullable<decimal> Precio { get; set; }
-
-        [Required(ErrorMessage = "La categoría es obligatoria.")]
-        [StringLength(50, ErrorMessage = "La categoría no puede exceder los 50 caracteres.")]
-        [Display(Name = "Categoría")]
+        [Required]
+        [StringLength(50, ErrorMessage = "El nombre no debe exceder los 50 caracteres")]
         public string Categoria { get; set; }
+        
+        [Required(ErrorMessage = "Debe subir una URL de la comida")]
+        [StringLength(255, ErrorMessage = "La URL no debe exceder los 255 caracteres")]
 
-        [StringLength(250, ErrorMessage = "La URL de la imagen no puede exceder los 250 caracteres.")]
-        [Url(ErrorMessage = "La URL de la imagen no es válida.")]
-        [Display(Name = "URL de imagen")]
+ master
         public string ImagenURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

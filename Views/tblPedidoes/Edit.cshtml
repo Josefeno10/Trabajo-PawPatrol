@@ -2,92 +2,61 @@
 
 @{
     ViewBag.Title = "Editar Pedido";
+administrarpedidos
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Bootstrap Icons + Fuente Poppins -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4"><i class="bi bi-pencil-square"></i> Editar Pedido</h2>
 
-<style>
-    body {
-        background: linear-gradient(135deg, #dce1d4, #f8f4e3);
-        font-family: 'Poppins', sans-serif;
-        color: #333;
-    }
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ID_Pedido)
 
-    .form-container {
-        max-width: 700px;
-        margin: 4rem auto;
-        background: #fff;
-        padding: 2rem;
-        border-radius: 20px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.NombreCliente, new { @class = "form-label fw-semibold" })
+                    @Html.TextBoxFor(model => model.NombreCliente, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
+                </div>
 
-    .form-title {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-    }
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Direccion, new { @class = "form-label fw-semibold" })
+                    @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                </div>
 
-    .btn-primary {
-        background-color: #198754;
-        border-color: #198754;
-    }
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Telefono, new { @class = "form-label fw-semibold" })
+                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                </div>
 
-        .btn-primary:hover {
-            background-color: #146c43;
-            border-color: #146c43;
-        }
-</style>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.FechaHora, new { @class = "form-label fw-semibold" })
+                    @Html.TextBoxFor(model => model.FechaHora, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                    @Html.ValidationMessageFor(model => model.FechaHora, "", new { @class = "text-danger" })
+                </div>
 
-<div class="container form-container">
-    <div class="form-title">
-        <i class="bi bi-pencil-square fs-3"></i>
-        <h2 class="mb-0">Editar Pedido</h2>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Total, new { @class = "form-label fw-semibold" })
+                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @readonly = "readonly" }) <!-- Total calculado automáticamente -->
+                    @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary px-5"><i class="bi bi-save"></i> Guardar Cambios</button>
+                </div>
+            }
+
+            <div class="text-center mt-3">
+                @Html.ActionLink("Volver a la lista", "Index", null, new { @class = "btn btn-outline-secondary" })
+            </div>
+        </div>
     </div>
-
-    @using (Html.BeginForm())
-    {
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.ID_Pedido)
-
-    <div class="mb-3">
-        @Html.LabelFor(model => model.NombreCliente, htmlAttributes: new { @class = "form-label" })
-        @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "form-label" })
-        @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "form-label" })
-        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(model => model.FechaHora, htmlAttributes: new { @class = "form-label" })
-        @Html.EditorFor(model => model.FechaHora, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.FechaHora, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "form-label" })
-        @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="d-flex justify-content-between mt-4">
-        <a href="@Url.Action("Index")" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
-        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Guardar</button>
-    </div>
-    }
+ master
 </div>
 
 @section Scripts {

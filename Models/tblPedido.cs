@@ -11,7 +11,9 @@ namespace PedidosComida.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Runtime.CompilerServices;
+
     public partial class tblPedido
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,11 +23,24 @@ namespace PedidosComida.Models
         }
     
         public int ID_Pedido { get; set; }
+        [Required]
+        [Display(Name = "Nombre del Cliente")]
+        [StringLength(100, ErrorMessage = "El nombre no debe exceder los 100 caracteres")]
         public string NombreCliente { get; set; }
+
+        [Required]
+        [Display(Name = "Dirección")]
+        [StringLength(200, ErrorMessage = "La Dirección no debe exceder los 200 caracteres")]
         public string Direccion { get; set; }
+        [Required]
+        [Phone]
         public string Telefono { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
         public System.DateTime FechaHora { get; set; }
+        [Required]
         public decimal Total { get; set; }
+        [Required]
         public string Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

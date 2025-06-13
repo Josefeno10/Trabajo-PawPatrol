@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -21,33 +22,51 @@ namespace PedidosComida.Controllers
         }
 
         // GET: tblProductoes/Details/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblProducto tblProducto = db.tblProducto.Find(id);
-            if (tblProducto == null)
-            {
+
+            tblProducto producto = db.tblProducto.Find(id);
+            if (producto == null)
                 return HttpNotFound();
-            }
-            return View(tblProducto);
+
+            return View(producto);
         }
 
         // GET: tblProductoes/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: tblProductoes/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Producto,Nombre,Precio,Categoria,ImagenURL")] tblProducto tblProducto)
+        
+        public ActionResult Create(tblProducto tblProducto)
         {
+            // Procesar imagen si fue subida
+            if (tblProducto.ImagenArchivo != null && tblProducto.ImagenArchivo.ContentLength > 0)
+            {
+                // Generar nombre único para la imagen
+                var fileName = Path.GetFileNameWithoutExtension(tblProducto.ImagenArchivo.FileName);
+                var extension = Path.GetExtension(tblProducto.ImagenArchivo.FileName);
+                var uniqueName = fileName + "_" + Guid.NewGuid().ToString().Substring(0, 6) + extension;
+
+                // Ruta completa en servidor
+                var path = Path.Combine(Server.MapPath("~/Images/"), uniqueName);
+
+                // Guardar imagen en carpeta /Images
+                tblProducto.ImagenArchivo.SaveAs(path);
+
+                // Guardar la ruta relativa en base de datos
+                tblProducto.ImagenURL = "/Images/" + uniqueName;
+            }
+
             if (ModelState.IsValid)
             {
                 db.tblProducto.Add(tblProducto);
@@ -59,58 +78,69 @@ namespace PedidosComida.Controllers
         }
 
         // GET: tblProductoes/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblProducto tblProducto = db.tblProducto.Find(id);
-            if (tblProducto == null)
-            {
+
+            tblProducto producto = db.tblProducto.Find(id);
+            if (producto == null)
                 return HttpNotFound();
-            }
-            return View(tblProducto);
+
+            return View(producto);
         }
 
         // POST: tblProductoes/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Producto,Nombre,Precio,Categoria,ImagenURL")] tblProducto tblProducto)
+        public ActionResult Edit(tblProducto tblProducto)
         {
+            // Procesar nueva imagen si fue subida
+            if (tblProducto.ImagenArchivo != null && tblProducto.ImagenArchivo.ContentLength > 0)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(tblProducto.ImagenArchivo.FileName);
+                var extension = Path.GetExtension(tblProducto.ImagenArchivo.FileName);
+                var uniqueName = fileName + "_" + Guid.NewGuid().ToString().Substring(0, 6) + extension;
+
+                var path = Path.Combine(Server.MapPath("~/Images/"), uniqueName);
+                tblProducto.ImagenArchivo.SaveAs(path);
+                tblProducto.ImagenURL = "/Images/" + uniqueName;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(tblProducto).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(tblProducto);
         }
 
         // GET: tblProductoes/Delete/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblProducto tblProducto = db.tblProducto.Find(id);
-            if (tblProducto == null)
-            {
+
+            tblProducto producto = db.tblProducto.Find(id);
+            if (producto == null)
                 return HttpNotFound();
-            }
-            return View(tblProducto);
+
+            return View(producto);
         }
 
         // POST: tblProductoes/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tblProducto tblProducto = db.tblProducto.Find(id);
-            db.tblProducto.Remove(tblProducto);
+            tblProducto producto = db.tblProducto.Find(id);
+            db.tblProducto.Remove(producto);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -118,9 +148,8 @@ namespace PedidosComida.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
+
             base.Dispose(disposing);
         }
     }
